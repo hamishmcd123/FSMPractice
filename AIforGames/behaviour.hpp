@@ -1,10 +1,10 @@
-#pragma once 
+#pragma once
 
-class Agent; 
+class Agent;
 
 class Behaviour {
 public:
+	virtual void enter(Agent* agent){}
 	virtual void update(Agent* agent, float dtime) = 0;
-	virtual void enter(Agent* agent) {}
-	virtual void exit(Agent*) {}
+	virtual void exit(Agent* agent) {}
 };

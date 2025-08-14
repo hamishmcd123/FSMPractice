@@ -27,25 +27,19 @@
     <ClCompile Include="pathagent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="agent.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GoToPointBehaviour.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="wanderingbehaviour.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="followbehaviour.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="selectorbehaviour.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="state.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="finitestatemachine.cpp">
+    <ClCompile Include="wanderbehaviour.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="agent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="fsm.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="followbehaviour.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="distancecondition.cpp">
@@ -62,22 +56,10 @@
     <ClInclude Include="pathagent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="agent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="behaviour.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GoToPointBehaviour.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="wanderingbehaviour.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="followbehaviour.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="selectorbehaviour.hpp">
+    <ClInclude Include="agent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="condition.hpp">
@@ -86,7 +68,13 @@
     <ClInclude Include="state.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="finitestatemachine.hpp">
+    <ClInclude Include="wanderbehaviour.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="fsm.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="followbehaviour.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="distancecondition.hpp">

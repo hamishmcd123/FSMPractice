@@ -1,4 +1,4 @@
-#include "finitestatemachine.hpp"
+#include "fsm.hpp"
 
 FiniteStateMachine::~FiniteStateMachine()
 {
@@ -9,28 +9,27 @@ FiniteStateMachine::~FiniteStateMachine()
 
 void FiniteStateMachine::update(Agent* agent, float dtime)
 {
-
-	State* newState = nullptr;
-
-	for (State::Transition* t : m_currentState->getTransitions()) {
+	m_newState = nullptr;
+	for (State::Transition* t : m_currentState->getTransition()) {
 		if (t->condition->isTrue(agent)) {
-			newState = t->targetState;
+			m_newState = t->targetState;
 		}
 	}
 
-	if (newState != nullptr && newState != m_currentState) {
+	if (m_newState != nullptr && m_newState != m_currentState) {
 		m_currentState->exit(agent);
-		m_currentState = newState;
-		m_currentState->enter(agent);
+		m_newState->enter(agent);
+		m_currentState = m_newState;
 	}
-
+	
 	m_currentState->update(agent, dtime);
-
-
-
 }
 
 void FiniteStateMachine::addState(State* state)
 {
+	if (m_currentState == nullptr) {
+		m_currentState = state;
+	}
+
 	m_states.push_back(state);
 }

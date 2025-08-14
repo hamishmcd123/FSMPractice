@@ -3,5 +3,8 @@
 
 bool DistanceCondition::isTrue(Agent* agent)
 {
-	return (glm::distance(agent->getPathAgent()->m_position, agent->getTarget()->getPathAgent()->m_position) < m_distance)== m_lessThan;
+    PathAgent* pa = agent->getPathAgent();
+    Agent* target = agent->getTarget();
+    PathAgent* targetPA = target->getPathAgent();
+    return (glm::distance(pa->m_position, targetPA->m_position) < m_distance) == m_lessThan;
 }

@@ -129,45 +129,41 @@
   <ItemGroup>
     <ClCompile Include="agent.cpp" />
     <ClCompile Include="distancecondition.cpp" />
-    <ClCompile Include="finitestatemachine.cpp" />
     <ClCompile Include="followbehaviour.cpp" />
-    <ClCompile Include="GoToPointBehaviour.cpp" />
+    <ClCompile Include="fsm.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="nodemap.cpp" />
     <ClCompile Include="pathagent.cpp" />
     <ClCompile Include="pathfinding.cpp" />
-    <ClCompile Include="selectorbehaviour.cpp" />
     <ClCompile Include="state.cpp" />
-    <ClCompile Include="wanderingbehaviour.cpp" />
+    <ClCompile Include="wanderbehaviour.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="agent.hpp" />
     <ClInclude Include="behaviour.hpp" />
     <ClInclude Include="condition.hpp" />
     <ClInclude Include="distancecondition.hpp" />
-    <ClInclude Include="finitestatemachine.hpp" />
     <ClInclude Include="followbehaviour.hpp" />
-    <ClInclude Include="GoToPointBehaviour.hpp" />
+    <ClInclude Include="fsm.hpp" />
     <ClInclude Include="nodemap.hpp" />
     <ClInclude Include="pathagent.hpp" />
     <ClInclude Include="pathfinding.hpp" />
-    <ClInclude Include="selectorbehaviour.hpp" />
     <ClInclude Include="state.hpp" />
-    <ClInclude Include="wanderingbehaviour.hpp" />
+    <ClInclude Include="wanderbehaviour.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
-    <Import Project="..\packages\raylib.5.5.0\build\native\raylib.targets" Condition="Exists('..\packages\raylib.5.5.0\build\native\raylib.targets')" />
     <Import Project="..\packages\glm.1.0.1\build\native\glm.targets" Condition="Exists('..\packages\glm.1.0.1\build\native\glm.targets')" />
+    <Import Project="..\packages\raylib.5.5.0\build\native\raylib.targets" Condition="Exists('..\packages\raylib.5.5.0\build\native\raylib.targets')" />
   </ImportGroup>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\packages\raylib.5.5.0\build\native\raylib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\raylib.5.5.0\build\native\raylib.targets'))" />
     <Error Condition="!Exists('..\packages\glm.1.0.1\build\native\glm.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\glm.1.0.1\build\native\glm.targets'))" />
+    <Error Condition="!Exists('..\packages\raylib.5.5.0\build\native\raylib.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\raylib.5.5.0\build\native\raylib.targets'))" />
   </Target>
 </Project>

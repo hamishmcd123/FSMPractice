@@ -4,15 +4,16 @@
 void FollowBehaviour::update(Agent* agent, float dtime)
 {
 	Agent* target = agent->getTarget();
-	float dist = glm::distance(target->getPathAgent()->m_position, agent->lastTargetPosition);
+	PathAgent* pa = agent->getPathAgent();
+	float dist = glm::distance(pa->m_position, agent->m_lastTargetPosition);
 	if (dist > agent->getNodeMap()->m_cellSize) {
-		agent->lastTargetPosition = target->getPathAgent()->m_position;
-		agent->goTo(agent->lastTargetPosition);
+		agent->m_lastTargetPosition = target->getPathAgent()->m_position;
+		agent->goTo(agent->m_lastTargetPosition);
 	}
 }
 
 void FollowBehaviour::enter(Agent* agent)
 {
-	agent->setColour({ 255, 0, 0, 255 });
-	agent->reset();
+	agent->setColour(RED);
+	agent->resetPath();
 }

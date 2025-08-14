@@ -2,6 +2,16 @@
 #include "nodemap.hpp"
 #include "raylib.h"
 
+PathAgent::PathAgent()
+{
+	m_currentIndex = 0;
+	m_currentNode = nullptr;
+	m_position = glm::vec2();
+	m_path = std::vector<Node*>();
+	m_speed = 0;
+	m_radius = 0.0f;
+}
+
 void PathAgent::update(float dtime)
 {
 	if (m_path.empty()) {
@@ -41,7 +51,7 @@ void PathAgent::goToNode(Node* node)
 	m_currentIndex = 0;
 }
 
-void PathAgent::draw(Color colour) const
+void PathAgent::draw(Color colour)
 {
 	DrawCircle(static_cast<int>(m_position.x), static_cast<int>(m_position.y), m_radius, colour);
 
@@ -52,12 +62,12 @@ void PathAgent::setNode(Node* node)
 	m_currentNode = node;
 }
 
-void PathAgent::setSpeed(int speed)
+void PathAgent::setSpeed(float speed)
 {
 	m_speed = speed;
 }
 
-void PathAgent::setRadius(int radius)
+void PathAgent::setRadius(float radius)
 {
 	m_radius = radius;
 }

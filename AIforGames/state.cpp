@@ -1,10 +1,4 @@
 #include "state.hpp"
-#include "behaviour.hpp"
-
-State::State(Behaviour* behaviour)
-{
-	m_behaviours.push_back(behaviour);
-}
 
 State::~State()
 {
@@ -25,28 +19,30 @@ void State::update(Agent* agent, float dtime)
 }
 
 void State::enter(Agent* agent)
-{	
+{
 	for (Behaviour* b : m_behaviours) {
 		b->enter(agent);
 	}
-
 }
 
 void State::exit(Agent* agent)
 {
 	for (Behaviour* b : m_behaviours) {
-		b->exit(agent);
+		b->enter(agent);
 	}
 }
 
-void State::addTransition(Condition* condition, State* target)
-{
-	m_transitions.push_back(new State::Transition{ condition, target });
-}
-
-
-
-std::vector<State::Transition*> State::getTransitions()
+std::vector<State::Transition*> State::getTransition()
 {
 	return m_transitions;
+}
+
+void State::addTransition(Condition* condition, State* targetState)
+{
+	m_transitions.push_back(new State::Transition{ condition, targetState });
+}
+
+void State::addBehaviour(Behaviour* behaviour)
+{
+	m_behaviours.push_back(behaviour);
 }

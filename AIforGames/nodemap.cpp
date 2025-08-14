@@ -34,11 +34,11 @@ void NodeMap::draw()
 	}
 }
 
-void NodeMap::drawPath(std::vector<Node*> path)
+void NodeMap::drawPath(std::vector<Node*> path, Color colour)
 {
 	for (int i = 1; i < path.size(); i++) {
-		DrawLine(path[i - 1]->position.x, path[i - 1]->position.y, path[i]->position.x,
-			path[i]->position.y, LIME);
+		DrawLine((int)(path[i - 1]->position.x), (int)(path[i - 1]->position.y), (int)(path[i]->position.x),
+			(int)(path[i]->position.y), colour);
 	}
 }
 
@@ -64,13 +64,24 @@ Node* NodeMap::getClosestNode(glm::vec2 worldPos)
 	return getNode(i, j);
 }
 
+Node* NodeMap::getRandomNode()
+{
+	Node* randNode = nullptr;
+	while (randNode == nullptr) {
+		int x = rand() % m_width;
+		int y = rand() % m_height;
+		randNode = getNode(x, y);
+	}
+	return randNode;
+}
+
 void NodeMap::initialise(std::vector<std::string>& asciiMap, int cellSize) {
 	m_cellSize = cellSize;
 	const char emptySquare = '0';
-	m_height = asciiMap.size();
+	m_height = (int)asciiMap.size();
 
 	// We are assuming all strings are the same length, so we set the width to the size of the first string.
-	m_width = asciiMap[0].size();
+	m_width = (int)asciiMap[0].size();
 
 	m_nodes = new Node*[m_width * m_height];
 
@@ -128,6 +139,14 @@ void NodeMap::resetNodes()
 	}
 }
 
+void NodeMap::drawStartEndNodes(Node* startNode, Node* endNode) {
+	if (startNode && endNode) {
+		DrawCircleLines((int)startNode->position.x, (int)startNode->position.y, 8.0f, RED);
+		DrawCircleLines((int)endNode->position.x, (int)endNode->position.y, 8.0f, LIME);
+	}
+}
+
+
 std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 {
 	if (startNode == nullptr || endNode == nullptr) {
@@ -170,7 +189,7 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 
 		for (auto& c : currentNode->connections) {
 			if (closedList.find(c.target) == closedList.end()) {
-				int gScore = c.cost + currentNode->gScore;
+				float gScore = c.cost + currentNode->gScore;
 
 			// If the target is not in the open list.
 				if (openSet.find(c.target) == openSet.end()) {
@@ -203,16 +222,4 @@ std::vector<Node*> NodeMap::DijkstrasSearch(Node* startNode, Node* endNode)
 	std::reverse(path.begin(), path.end());
 
 	return path;
-}
-
-Node* NodeMap::getRandomNode()
-{
-	Node* node = nullptr;
-	while (node == nullptr)
-	{
-		int x = rand() % m_width;
-		int y = rand() % m_height;
-		node = getNode(x, y);
-	}
-	return node;
 }
