@@ -70,6 +70,10 @@ void Agent::setTarget(Agent* target)
 	m_target = target;
 }
 
+float* Agent::getStateTimer() {
+	return &m_stateTimer;
+}
+
 Color Agent::getColour()
 {
 	return m_colour;

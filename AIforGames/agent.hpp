@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 #include "pathagent.hpp"
 #include "nodemap.hpp"
 #include "fsm.hpp"
@@ -17,6 +17,7 @@ public:
 	void setColour(Color colour);
 	void goTo(glm::vec2 point);
 	void setTarget(Agent* target);
+	float* getStateTimer();
 	Color getColour();
 	glm::vec2 m_lastTargetPosition;
 	Agent* getTarget();
@@ -26,4 +27,5 @@ private:
 	FiniteStateMachine* m_fsm;
 	Color m_colour;
 	Agent* m_target;
+	float m_stateTimer;
 };

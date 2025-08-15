@@ -11,6 +11,8 @@ void WanderBehaviour::update(Agent* agent, float dtime)
 
 void WanderBehaviour::enter(Agent* agent)
 {
+	*(agent->getStateTimer()) += 0.0f;
+	agent->getPathAgent()->setSpeed(100);
 	agent->resetPath();
 	agent->setColour(BLUE);
 }

@@ -1,15 +1,18 @@
 #include <string>
 #include "pathfinding.hpp"
 #include "nodemap.hpp"
-#include "raylib.hpp"
+#include "raylib.h"
 #include "pathagent.hpp"
 #include "agent.hpp"
 #include "fsm.hpp"
 #include "wanderbehaviour.hpp"
 #include "distancecondition.hpp"
 #include "followbehaviour.hpp"
-
+#include "recoverbehaviour.hpp"
+#include "timecondition.hpp"
+#include <iostream>
 #include <ctime>
+
 int main() {
 	int cellSize = 32;
 	srand((unsigned int)time(0));
@@ -42,11 +45,16 @@ int main() {
 	Node* end = nullptr;
 
 	// Create distance condition
-
 	// If the target is less than 8 cells away...
-	DistanceCondition* lessThan8 = new DistanceCondition(5 * map.m_cellSize, true);
+	DistanceCondition* lessThan6 = new DistanceCondition((float)(5 * map.m_cellSize), true);
 	// If the target is more than 10 cells away...
-	DistanceCondition* moreThan15 = new DistanceCondition(15 * map.m_cellSize, false);
+	DistanceCondition* moreThan15 = new DistanceCondition((float)(15 * map.m_cellSize), false);
+
+	// Create a time condition where chasing for 5 seconds leads to recovery state.
+	TimerCondition* chaseFor4 = new TimerCondition(4.0f);
+
+	// Create a time condition for recovering for 3 seconds.
+	TimerCondition* recoverFor3 = new TimerCondition(3.0f);
 
 	// Create finite state machine for npc.
 	FiniteStateMachine* fsm = new FiniteStateMachine();
@@ -59,14 +67,24 @@ int main() {
 	FollowBehaviour* followBehaviour = new FollowBehaviour();
 	State* follow = new State;
 
+	// Create recover behaviour and state
+	RecoverBehaviour* recoverBehaviour = new RecoverBehaviour();
+	State* recover = new State;
+
 	wander->addBehaviour(wanderBehaviour);
-	wander->addTransition(lessThan8, follow);
+	wander->addTransition(lessThan6, follow);
 
 	follow->addTransition(moreThan15, wander);
+	follow->addTransition(chaseFor4, recover);
 	follow->addBehaviour(followBehaviour);
 
-	fsm->addState(wander);
+	recover->addBehaviour(recoverBehaviour);
+	recover->addTransition(new AND(recoverFor3, lessThan6), follow);
+	recover->addTransition(new AND(recoverFor3, moreThan15), wander);
 
+	fsm->addState(wander);
+	fsm->addState(follow);
+	fsm->addState(recover);
 
 	Agent player(&map);
 	PathAgent* playerPathAgent = player.getPathAgent();
@@ -96,7 +114,6 @@ int main() {
 		map.draw();
 		NodeMap::drawPath(playerPathAgent->m_path, RAYWHITE);
 		NodeMap::drawPath(npcPathAgent->m_path, npc.getColour());
-
 		if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
 			map.resetNodes();
 			Vector2 mousePos = GetMousePosition();
