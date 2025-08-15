@@ -7,7 +7,7 @@ State::~State()
 	}
 
 	for (Transition* t : m_transitions) {
-		delete t->condition;
+		delete t;
 	}
 }
 

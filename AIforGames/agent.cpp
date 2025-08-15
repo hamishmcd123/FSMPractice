@@ -83,3 +83,8 @@ Agent* Agent::getTarget()
 {
 	return m_target;
 }
+
+Agent::~Agent()
+{
+	delete m_fsm;
+}

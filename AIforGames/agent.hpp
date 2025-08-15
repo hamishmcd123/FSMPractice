@@ -21,6 +21,7 @@ public:
 	Color getColour();
 	glm::vec2 m_lastTargetPosition;
 	Agent* getTarget();
+	~Agent();
 private:
 	PathAgent m_pathAgent;
 	NodeMap* m_nodeMap;

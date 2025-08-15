@@ -13,6 +13,7 @@
 #include <iostream>
 #include <ctime>
 
+
 int main() {
 	int cellSize = 32;
 	srand((unsigned int)time(0));
@@ -43,7 +44,7 @@ int main() {
 
 	Node* start = map.getRandomNode();
 	Node* end = nullptr;
-
+	
 	// Create distance condition
 	// If the target is less than 8 cells away...
 	DistanceCondition* lessThan6 = new DistanceCondition((float)(5 * map.m_cellSize), true);
@@ -71,6 +72,9 @@ int main() {
 	RecoverBehaviour* recoverBehaviour = new RecoverBehaviour();
 	State* recover = new State;
 
+	AND* recoverANDlessthan = new AND(recoverFor3, lessThan6);
+	AND* recoverANDmorethan = new AND(recoverFor3, moreThan15);
+
 	wander->addBehaviour(wanderBehaviour);
 	wander->addTransition(lessThan6, follow);
 
@@ -79,8 +83,9 @@ int main() {
 	follow->addBehaviour(followBehaviour);
 
 	recover->addBehaviour(recoverBehaviour);
-	recover->addTransition(new AND(recoverFor3, lessThan6), follow);
-	recover->addTransition(new AND(recoverFor3, moreThan15), wander);
+	recover->addTransition(recoverANDlessthan, follow);
+	recover->addTransition(recoverANDmorethan, wander);
+
 
 	fsm->addState(wander);
 	fsm->addState(follow);
@@ -104,8 +109,6 @@ int main() {
 	npc.setColour(BLUE);
 	npc.setTarget(&player);
 
-	std::vector<Node*> path = NodeMap::DijkstrasSearch(start, end);
-
 	InitWindow(cellSize * map.m_width, cellSize * map.m_height, "NodeGraph");
 
 	while (!WindowShouldClose()) {
@@ -118,11 +121,11 @@ int main() {
 			map.resetNodes();
 			Vector2 mousePos = GetMousePosition();
 			start = map.getClosestNode(glm::vec2(mousePos.x, mousePos.y));
-			path = NodeMap::DijkstrasSearch(start, end);
 			if (start != nullptr) {
 				playerPathAgent->setNode(start);
 				playerPathAgent->m_position = start->position;
 				playerPathAgent->goToNode(end);
+
 			}
 		}
 
@@ -142,6 +145,15 @@ int main() {
 	}
 
 	CloseWindow();
+	
+	// Cleanup 
+	delete lessThan6;
+	delete moreThan15;
+	delete chaseFor4;
+	delete recoverFor3;
+	delete recoverANDlessthan;
+	delete recoverANDmorethan;
 
+	return 0;
 }
 
